@@ -1,9 +1,9 @@
 <div class="container">
     <div class="row">
-      <div class="col-md-2">
+      <div class="col-md-4">
           <h3 class="display-4">Word Match!</h3>
       </div>
-      <div class="col-md-8"></div>
+      <div class="col-md-6"></div>
       <div class="col-md-2"></div>
     </div>
     <div *ngIf="gameStatus!='NEW'" class="row">
@@ -26,8 +26,8 @@
       </div>      
       <div  class="col-md-4">
         <div *ngIf="gameStatus!='NEW'" class="row input-group mb-3">
-            <input type="text" class="form-control" [(ngModel)]="word" [disabled]="gameStatus!='INPROGRESS'" placeholder="Your word" (keydown.enter)="isValidWord()"  >
-            <input type="button" (click)="iSValidWord()" [disabled]="gameStatus!='INPROGRESS'" class="btn btn-success" value="This is my word!">        
+            <input type="text" class="form-control" (keyup.enter)="isValidWord()" [(ngModel)]="word" [disabled]="gameStatus!='INPROGRESS'" placeholder="Your word"   >
+            <input type="button" (click)="isValidWord()" [disabled]="gameStatus!='INPROGRESS'" class="btn btn-success" value="This is my word!">        
         </div>        
         <div *ngIf="gameStatus=='NEW' || gameStatus=='ENDED'"  class="row">
             <input type="button" (click)="newGame()" class="btn btn-primary" value="Let's Begin!">

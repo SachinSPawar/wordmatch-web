@@ -29,7 +29,8 @@ export class AppComponent implements OnInit{
 
   }
 
-  iSValidWord(){
+  isValidWord(){
+    
     this.wordmatchService.checkIfWordIsValid(this.word).subscribe((response)=>{
       let isValid=response.result;
       if(isValid){

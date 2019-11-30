@@ -1,32 +1,42 @@
-
-<div>
-    <div>
-        <input type="button" (click)="newGame()" value="Let's Begin!">
+<div class="container">
+    <div class="row">
+      <div class="col-md-2">
+          <h3 class="display-4">Word Match!</h3>
+      </div>
+      <div class="col-md-8"></div>
+      <div class="col-md-2"></div>
     </div>
-  
-  <span>Characters: {{state.characters}}</span>
-  <div>
-    <span>Your Word : </span><input type="text" [(ngModel)]="word" (keydown.enter)="isValidWord()"  >
-    <input type="button" (click)="iSValidWord()" value="This is my word!">
-  </div>
-
-  <div *ngIf="state.words && state.words.length>0"> Your words :
-    <li *ngFor="let word of state.words ">
-      {{word}}
-    </li>
-  </div>
-
-  <div *ngIf="state.score">
-    Your score is: {{state.score}}
-  </div>
-
-  <div>
-      <input type="button" (click)="gameOver()" value="I am out of words!">
-  </div>
-
-  <div>
-      <input type="button" (click)="newGame()" value="I wanna try again!">
-  </div>
+    <div *ngIf="gameStatus!='NEW'" class="row">
+      <ul class="list-group list-group-horizontal-lg">
+          <li class="list-group-item list-group-item-light" *ngFor="let char of characters()">
+              {{char}}
+            </li>      
+      </ul>
+    </div>
+    <div class="row">
+      <div  *ngIf="gameStatus!='NEW'" class="col-md-4">          
+        <li  class="list-group-item list-group-item-success" *ngIf="state.score">
+            Score : {{state.score}}
+        </li>    
+          <div *ngIf="state.words && state.words.length>0" class="list-group list-group-scroll"  >
+              <li  class="list-group-item list-group-item-light" *ngFor="let word of state.words ">
+                {{word}}
+              </li>
+            </div>          
+      </div>      
+      <div  class="col-md-4">
+        <div *ngIf="gameStatus!='NEW'" class="row input-group mb-3">
+            <input type="text" class="form-control" [(ngModel)]="word" [disabled]="gameStatus!='INPROGRESS'" placeholder="Your word" (keydown.enter)="isValidWord()"  >
+            <input type="button" (click)="iSValidWord()" [disabled]="gameStatus!='INPROGRESS'" class="btn btn-success" value="This is my word!">        
+        </div>        
+        <div *ngIf="gameStatus=='NEW' || gameStatus=='ENDED'"  class="row">
+            <input type="button" (click)="newGame()" class="btn btn-primary" value="Let's Begin!">
+        </div>        
+        <div *ngIf="gameStatus=='INPROGRESS'" class="row"> 
+          <input type="button" (click)="gameOver()"  class="btn btn-danger" value="I am out of words!">
+        </div>        
+      </div>      
+    </div>
 
 </div>
 

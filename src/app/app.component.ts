@@ -18,9 +18,11 @@ export class AppComponent implements OnInit{
     score:0
   }
 
+  gameStatus=""
   word="";
 
   ngOnInit() {
+    this.gameStatus="NEW"
     this.wordmatchService.getGameState().subscribe((response)=>{
       this.state=response;
     })    
@@ -31,12 +33,15 @@ export class AppComponent implements OnInit{
     this.wordmatchService.checkIfWordIsValid(this.word).subscribe((response)=>{
       let isValid=response.result;
       if(isValid){
-        this.state.words.push(this.word);
+        this.wordmatchService.getGameState().subscribe((response)=>{
+          this.state=response;
+        })  
       }
     })
   }
 
   gameOver(){
+    this.gameStatus="ENDED"
     this.wordmatchService.gameOver().subscribe((response)=>{
       this.state=response;
     })
@@ -44,9 +49,14 @@ export class AppComponent implements OnInit{
 
   newGame(){
     this.word=""
+    this.gameStatus="INPROGRESS"
     this.wordmatchService.startNewGame().subscribe((response)=>{
       this.state=response;
     })
+  }
+
+  characters(){
+    return this.state.characters.split('');
   }
 
 }
